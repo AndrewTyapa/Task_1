@@ -93,4 +93,36 @@ public class BurgerTest {
         assertTrue("Receipt should contain price",
                 receipt.matches("(?s).*Price: ?330[.,]0?.*"));
     }
+
+    @Test
+    public void testSetBunsUpdatesBun() {
+        burger.setBuns(bun);
+        assertEquals(bun, burger.bun);
+    }
+
+    @Test
+    public void testAddIngredientIncreasesListSize() {
+        burger.setBuns(bun);
+        int initialSize = burger.ingredients.size();
+        burger.addIngredient(ingredient1);
+        assertEquals(initialSize + 1, burger.ingredients.size());
+    }
+
+    @Test
+    public void testRemoveIngredient() {
+        burger.setBuns(bun);
+        burger.addIngredient(ingredient1);
+        burger.addIngredient(ingredient2);
+        burger.removeIngredient(0);
+        assertEquals(1, burger.ingredients.size());
+        assertEquals(ingredient2, burger.ingredients.get(0));
+    }
+    @Test
+    public void testGetPriceWithIngredients() {
+        burger.setBuns(bun);
+        burger.addIngredient(ingredient1);
+        burger.addIngredient(ingredient2);
+        float price = burger.getPrice();
+        assertEquals(330f, price, 0.01f);
+    }
 }
